@@ -14,3 +14,10 @@ module.exports.signin=function(req,res){
        title:"codeial |user" 
     })
 };
+
+module.exports.create=function(req,res){
+
+};
+module.exports.createsession=function(req,res){
+
+};
