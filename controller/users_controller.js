@@ -44,5 +44,5 @@ return ;
 })
 };
 module.exports.createsession=function(req,res){
-
+return res.redirect('/');
 };

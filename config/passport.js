@@ -3,7 +3,7 @@ const localstrategy=require('passport-local').Strategy;
 const User=require('../models/users');
 
 passport.use(new localstrategy({
-    usernameField:email;
+    usernameField:'email'
 },
 function(email,password,done){
     User.findOne({email:email}, function(err,user){
