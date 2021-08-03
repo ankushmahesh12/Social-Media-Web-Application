@@ -8,7 +8,7 @@ const db=require('./config/mongoose');
 const session=require('express-session');
 const passport=require('passport');
 const passportlocal=require('./config/passport');
-//const mongostore=require('connect-mongo')(session);
+const MongoStore=require('connect-mongodb-session')(session);
 
 app.use(express.urlencoded());
 app.use(cookieparser());
@@ -32,18 +32,18 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge:(1000*60*100)
-    }
-    /*store: new mongostore({
-        mongooseConnection:db,
-        autoRemove:'disabled'
-    }
-    
+    },
+    store: new MongoStore(
+        {   
+            mongooseConnection:db,
+            autoRemove: 'disabled'
+        },
         function(err){
-            console.log(err || 'connect-mongodb setup');
+            console.log(err || 'connected to passport');
         }
+    )
     
-    )*/
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
