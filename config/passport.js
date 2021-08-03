@@ -30,5 +30,17 @@ passport.serializeUser(function(user, done) {
       done(err, user);
     });
   });
+passport.checkAuthentication=function(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    return res.redirect('/user/signin');
+}
+passport.setAuthenticatedUser=function(req,res,next){
+    if(req.isAuthenticated()){
+        res.locals.user=req.user
+    }
+    next();
+}
 
   module.exports=passport;

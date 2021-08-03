@@ -8,7 +8,7 @@ const db=require('./config/mongoose');
 const session=require('express-session');
 const passport=require('passport');
 const passportlocal=require('./config/passport');
-
+//const mongostore=require('connect-mongo')(session);
 
 app.use(express.urlencoded());
 app.use(cookieparser());
@@ -23,6 +23,8 @@ app.set('view engine','ejs');
 app.set('views','./views');
 //app.use('/',require('./routes/users_route'));
 
+
+
 app.use(session({
     name:'codeial',
     secret:'blahsomething',
@@ -31,9 +33,20 @@ app.use(session({
     cookie:{
         maxAge:(1000*60*100)
     }
+    /*store: new mongostore({
+        mongooseConnection:db,
+        autoRemove:'disabled'
+    }
+    
+        function(err){
+            console.log(err || 'connect-mongodb setup');
+        }
+    
+    )*/
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 app.use('/', require('./routes'));
 
 app.listen(port,function(err){
